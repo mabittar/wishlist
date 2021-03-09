@@ -21,9 +21,11 @@
     Link de onde encontrar (opcional)
     Foto (opcional)
 
-  [ ] O usuário deve poder informar se já ganhou/comprou um item.
+  [x] O usuário deve poder informar se já ganhou/comprou um item.
 
-  [ ] Deve existir um endpoint para trazer um item da lista de forma randômica.
+  [x] Deve existir um endpoint para trazer um item da lista de forma randômica.
+
+    [ ] Evoluir o endpoint trazer um item da lista de forma randômica.
 
   [ ] Ter uma base de dados que armazene as informações
 

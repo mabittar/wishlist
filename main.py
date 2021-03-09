@@ -1,76 +1,44 @@
+from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
-from fastapi import FastAPI
-from modelo import Item, ItemResposta
-from data import ListaDesejos, StatusItens
+from fastapi import FastAPI, HTTPException, Depends
+from database import engine, SessionLocal
+from sqlalchemy.orm import Session
+import schemas
+import models
+import crud
 
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-wishlist = ListaDesejos()
-# class User(BaseModel):
 
-#     id: str
-
-#     name: str
-
-#     email: str
-
-
-# @app.get("/users/{user_id}")
-# def listar_usuarios(item_id: int, q: Optional[str] = None):
-#     """
-#         Cadastra usuários
-#     """
-#     return {"item_id": item_id, "q": q}
-
-@app.get("/", tags=["Root"])
-async def read_root():
-    return {"message": "Bem Vindo a Lista de Desejos! - Acrescente '/docs' ao final da URL para acessar a documentação"}
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
-@app.get("/wishlist", response_model=List[ItemResposta])
-def filtrar_itens_nao_possuidos(have: Optional[StatusItens] = None):
-    """
-        retorna lista de desejos que ainda não foram adquiridos
-    """
-    if have is not None:
-        return wishlist.filtrar(have=have)
-    return wishlist.listar()
+@app.get("/")
+async def root():
+    return "Insira \docs para ver a documentação completa"
 
 
-@app.post("/wishlist", response_model=ItemResposta, status_code=201)
-def inserir_wishlist(item_a_inserir: Item):
-    """
-        insere um item na lista de desejos
-    """
-    return wishlist.inserir(item_a_inserir.dict())
+@app.get("/wishlist", response_model=List[schemas.Wish])
+async def lista_desejos(have: Optional[bool] = None, db: Session = Depends(get_db)):
+    return crud.list_wishes_filter(db, have)
 
 
-@app.get("/wishlist/{item_id}", response_model=ItemResposta, status_code=201)
-def filtrar_wishlist(id_do_item: int):
-    """
-        view que mostra o item de desejo a partir do id dele
-    """
-    return wishlist.pegar(id_do_item)
+@app.get("/wishlist/{id}", response_model=schemas.Wish)
+async def filtra_id(id: int, db: Session = Depends(get_db)):
+    wish_db = crud.get_wish(db, id)
+    if wish_db:
+        return wish_db
+    raise HTTPException(
+        status_code=404, detail="ID não encontrado / ID not found")
 
 
-@app.get("/wishlist", response_model=List[ItemResposta])
-def filtrar_itens(have: Optional[StatusItens] = None):
-    """
-        Realiza o filtro na lista de desejos (WishList) e retorna os itens de acordo com a opção escolhida.\n
-        Opção --- : realiza o filtro na lista completa\n
-        Opção False: Retorna os itens ainda não adquiridos\n
-        Opção True: Retorna os itens já comprados / ganhos
-    """
-    if have is not None:
-        return wishlist.filtrar(have=have)
-    return wishlist.listar()
-
-
-# @app.put("/wishlist")
-# def update_item(item_id: int, item: Item):
-#     """
-#         Atualiza desejo se o usuário já possui
-#     """
-
-#     return {"item_have": item.have, "item_id": item_id}
+@app.post("/wishlist", response_model=schemas.Wish)
+async def criar_novo_desejo(desejo: schemas.WishCreate, db: Session = Depends(get_db)):
+    return crud.create_wish(db, desejo)
