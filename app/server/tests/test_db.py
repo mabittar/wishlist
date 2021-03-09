@@ -1,5 +1,5 @@
 from starlette.testclient import TestClient
-from main import app, wishlist
+from app.server.app import app, wishlist
 
 client = TestClient(app)
 
