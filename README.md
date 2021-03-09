@@ -49,5 +49,5 @@
   ## Como fazer o Deploy?
   1. crie uma instância no heroku utilizando `heroku create meu_projeto` substitua o meu_projeto pelo seu projeto
   2. envie suas configurações para o heroku com `heroku config:push`
-  3. envie o código para o heroku utilizando `git push heroku master --force`
+  3. envie o código para o heroku utilizando `git push heroku main --force`
   4. para abrir sua aplicação online utilize `heroku open`

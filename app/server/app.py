@@ -1,7 +1,7 @@
 from typing import Optional, List, Dict, Any
 from fastapi import FastAPI
-from modelos import Item, ItemResposta
-from data import ListaDesejos, StatusItens
+from app.models.modelo import Item, ItemResposta
+from app.server.data import ListaDesejos, StatusItens
 
 
 app = FastAPI()
@@ -22,6 +22,10 @@ wishlist = ListaDesejos()
 #         Cadastra usuários
 #     """
 #     return {"item_id": item_id, "q": q}
+
+@app.get("/", tags=["Root"])
+async def read_root():
+    return {"message": "Bem Vindo a Lista de Desejos! - Acrescente '/docs' ao final da URL para acessar a documentação"}
 
 
 @app.get("/wishlist", response_model=List[ItemResposta])
@@ -70,5 +74,3 @@ def filtrar_itens(have: Optional[StatusItens] = None):
 #     """
 
 #     return {"item_have": item.have, "item_id": item_id}
-
-
