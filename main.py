@@ -70,3 +70,5 @@ def filtrar_itens(have: Optional[StatusItens] = None):
 #     """
 
 #     return {"item_have": item.have, "item_id": item_id}
+
+
