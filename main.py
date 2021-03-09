@@ -1,7 +1,7 @@
 from typing import Optional, List, Dict, Any
 from fastapi import FastAPI
-from app.models.modelo import Item, ItemResposta
-from app.server.data import ListaDesejos, StatusItens
+from modelo import Item, ItemResposta
+from data import ListaDesejos, StatusItens
 
 
 app = FastAPI()
