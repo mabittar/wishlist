@@ -12,3 +12,4 @@ def test_invalid_post_status_code():
 def test_read_inexistent_item():
     response = client.get("/whishlist/bola")
     assert response.status_code == 404
+
