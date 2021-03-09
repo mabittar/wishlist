@@ -4,7 +4,7 @@ from app.server.data import StatusItens
 
 
 class Item(BaseModel):
-    name: str = Field (...)
+    name: str = Field(...)
     description: Optional[str]
     image: Optional[str]
     link: Optional[str]
