@@ -23,6 +23,10 @@ wishlist = ListaDesejos()
 #     """
 #     return {"item_id": item_id, "q": q}
 
+@app.get("/", tags=["Root"])
+async def read_root():
+    return {"message": "Bem Vindo a Lista de Desejos! - Acrescente '/docs' ao final da URL para acessar a documentação"}
+
 
 @app.get("/wishlist", response_model=List[ItemResposta])
 def filtrar_itens_nao_possuidos(have: Optional[StatusItens] = None):
