@@ -19,18 +19,18 @@ def get_db():
         db.close()
 
 
-@app.get("/")
-async def root():
-    return "Insira /docs para ver a documentação completa"
+@app.get("/", tags=["Roots"])
+async def index():
+    return {"message": "Insira /docs para ver a documentação completa"}
 
 
-@app.get("/wishlist", response_model=List[schemas.Wish])
+@app.get("/wishlist", response_model=List[schemas.Wish], tags=["Wishlist"])
 async def lista_desejos(have: Optional[bool] = None, db: Session = Depends(get_db)):
     '''Endpoint para a lista de Desejos '''
     return crud.list_wishes_filter(db, have)
 
 
-@app.get("/wishlist/{id}", response_model=schemas.Wish)
+@app.get("/wishlist/{id}", response_model=schemas.Wish, tags=["Wishlist"])
 async def filtra_id(id: int, db: Session = Depends(get_db)):
     '''Filtra a lista de desejos pelo ID '''
     wish_db = crud.get_wish(db, id)
@@ -40,7 +40,7 @@ async def filtra_id(id: int, db: Session = Depends(get_db)):
         status_code=404, detail="ID não encontrado / ID not found")
 
 
-@app.post("/wishlist", response_model=schemas.Wish, status_code=201)
+@app.post("/wishlist", response_model=schemas.Wish, status_code=201, tags=["Wishlist"])
 async def criar_novo_desejo(desejo: schemas.WishCreate, db: Session = Depends(get_db)):
     '''Cria um novo desejo.\n
     Os campos descrição, image_link e link são opcionais\n
@@ -52,7 +52,7 @@ async def criar_novo_desejo(desejo: schemas.WishCreate, db: Session = Depends(ge
 # TODO: otimizar a busca pelo banco
 
 
-@app.delete("/wishlist/{id}", status_code=204)
+@app.delete("/wishlist/{id}", status_code=204, tags=["Wishlist"])
 async def deletar_desejo(id: int, db: Session = Depends(get_db)):
     '''Delata desejo a partir do ID '''
     wish_db = crud.get_wish(db, id)
@@ -63,8 +63,8 @@ async def deletar_desejo(id: int, db: Session = Depends(get_db)):
         status_code=404, detail="ID não encontrado / ID not found")
 
 
-@app.patch("/wishlist/{id}", response_model=schemas.Wish)
-async def atualiza_desejo(id: int, desejo: schemas.WishUpdate, db: Session = Depends(get_db)):
+@app.patch("/wishlist/{id}", response_model=schemas.Wish, tags=["Wishlist"])
+async def atualiza_desejo_pelo_ID(id: int, desejo: schemas.WishUpdate, db: Session = Depends(get_db)):
     '''Atualiza os campos\n
     have para indicar se o usuário já possui / comprou tal desejo\n
     as demais informações também podem ser altaradas, com exceção do campo name'''

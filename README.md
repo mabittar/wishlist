@@ -48,6 +48,8 @@
   8. abra o navegador na página indicada: http://127.0.0.1:8000
   9. para acessar a documentação interativa acesse: http://127.0.0.1:8000/docs
 
+Todos os endpoints estão documentados via [SwaggerUI](https://swagger.io/tools/swagger-ui/), que pode ser acessado no endereço indicado no item 9.
+
 
   ## Como fazer o Deploy? 
   [minha app no Heroku](https://wishlist-mmb.herokuapp.com/docs)
@@ -56,3 +58,4 @@
   2. envie o código para o heroku utilizando `git push heroku main --force`
   3. para abrir sua aplicação online utilize `heroku open`
 
+Processo de deploy e build são feitos automaticamente na branch main.
