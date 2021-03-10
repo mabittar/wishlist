@@ -1,8 +1,9 @@
 from sqlalchemy import Column, String, Integer, Boolean
 from database import Base
 
+
 class Wish(Base):
-    __tablename__  = 'Wishes'
+    __tablename__ = 'Wishes'
 
     id = Column(Integer, primary_key=True)
 
@@ -14,4 +15,4 @@ class Wish(Base):
 
     link = Column(String, nullable=True)
 
-    have = Column(Boolean)
+    have = Column(Boolean, default=False,)

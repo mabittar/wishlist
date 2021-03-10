@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List, Dict, Any
+from typing import Optional, List
 
 
 class WishBase(BaseModel):
@@ -7,11 +7,19 @@ class WishBase(BaseModel):
     description: Optional[str]
     image_link: Optional[str]
     link: Optional[str]
-    have: bool
+    have: bool = False
 
 
 class WishCreate(WishBase):
     ...
+
+
+class WishUpdate(WishBase):
+    name: Optional[str]
+    description: Optional[str]
+    image_link: Optional[str]
+    link: Optional[str]
+    have: bool = True
 
 
 class Wish(WishBase):
