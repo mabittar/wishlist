@@ -59,69 +59,6 @@ def test_listing_wishes_return_one_wish_with_have():
     WISHES.clear()
 
 
-def test_wishlist_should_accept_post():
-    resp = TestClient(app).post("/wishlist")
-    assert resp.status_code != 405
-
-
-def test_created_wish_should_have_name():
-    resp = TestClient(app).post("/wishlist", json={})
-    assert resp.status_code == 422
-
-
-def test_create_wish_endpoint_should_return_created_wish_itself():
-    temp_wish = {"name": "cadeira 2",
-                 "description": "",
-                 "image_link": "",
-                 "link": "",
-                 "have": False
-                 }
-
-    client = TestClient(app)
-    resp = client.post("/wishlist", json=temp_wish)
-    resp_json = resp.json()
-    resp_json.pop("id")
-    assert resp_json == temp_wish
-    WISHES.clear()
-
-
-def test_creating_wish_should_return_201():
-    temp_wish = {"name": "cadeira 2",
-                 "description": "",
-                 "image_link": "",
-                 "link": "",
-                 "have": False
-                 }
-
-    client = TestClient(app)
-    resp = client.post("/wishlist", json=temp_wish)
-    assert resp.status_code == 201
-    WISHES.clear()
-
-
-def test_creating_wishes_should_return_unique_id():
-    temp_wish1 = {"name": "cadeira 2",
-                  "description": "",
-                  "image_link": "",
-                  "link": "",
-                  "have": False
-                  }
-    client = TestClient(app)
-    resp1 = client.post("/wishlist", json=temp_wish1)
-
-    temp_wish2 = {"name": "cadeira 2",
-                  "description": "",
-                  "image_link": "",
-                  "link": "",
-                  "have": False
-                  }
-
-    client = TestClient(app)
-    resp2 = client.post("/wishlist", json=temp_wish2)
-
-    assert resp1.json()["id"] != resp2.json()["id"]
-    WISHES.clear()
-
 
 def test_searching_for_invalid_id_should_return_404():
     client = TestClient(app)
@@ -157,19 +94,6 @@ def test_deleting_wish_removes_from_wishlist():
     client.delete("/wishlist/1")
     resp = client.get("/wishlist/1")
     assert resp.status_code == 404
-    WISHES.clear()
-
-
-def test_creating_task_should_add_to_tasks_list():
-    temp_wish = {"name": "cadeira",
-                 "description": "",
-                 "image_link": "",
-                 "link": "",
-                 "have": False
-                 }
-    client = TestClient(app)
-    client.post("/wishlist", json=temp_wish)
-    assert len(WISHES) != 0
     WISHES.clear()
 
 
