@@ -30,7 +30,7 @@ def delete_wish(db: Session, wish_id: int):
 
 def update_wish(db: Session, wish_id: int, wish: schemas.WishUpdate):
     wish_db = get_wish(db, wish_id)
-    wish_db.wish = wish.have or wish_db.have
+    wish_db.have = wish.have or wish_db.have
     wish_db.image_link = wish.image_link or wish_db.image_link
     wish_db.link = wish.link or wish_db.link
     wish_db.description = wish.description or wish_db.description
