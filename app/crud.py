@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from random import randrange
-from . import models, schemas
+from app import models, schemas
 
 
 def list_wishes_filter(db: Session, have: bool = None):

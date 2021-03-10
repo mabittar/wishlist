@@ -1,7 +1,7 @@
-from schemas import WISHES, Wish, fake_wish_db
+from app.schemas import WISHES, Wish, fake_wish_db
 from starlette.testclient import TestClient
 from copy import copy
-from main import app
+from app.main import app
 
 DEFAULT_WISH = Wish(id=1, name="mouse", description="mouse sem fio",
                     image_link="https://www.corsair.com/corsairmedia/sys_master/productcontent/ch-9315311-na-dark_core_rgb_se_04.png",
@@ -57,7 +57,6 @@ def test_listing_wishes_return_one_wish_with_have():
     WISHES.append(copy(DEFAULT_WISH.dict()))
     assert "have" in RESP.json().pop()
     WISHES.clear()
-
 
 
 def test_searching_for_invalid_id_should_return_404():

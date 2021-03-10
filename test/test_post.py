@@ -1,7 +1,7 @@
-from schemas import WISHES, Wish, fake_wish_db
+from app.schemas import WISHES, Wish, fake_wish_db
 from starlette.testclient import TestClient
 from copy import copy
-from main import app
+from app.main import app
 
 DEFAULT_WISH = Wish(id=1, name="mouse", description="mouse sem fio",
                     image_link="https://www.corsair.com/corsairmedia/sys_master/productcontent/ch-9315311-na-dark_core_rgb_se_04.png",

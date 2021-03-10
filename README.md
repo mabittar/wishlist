@@ -59,3 +59,8 @@ Todos os endpoints estão documentados via [SwaggerUI](https://swagger.io/tools/
   3. para abrir sua aplicação online utilize `heroku open`
 
 Processo de deploy e build são feitos automaticamente na branch main.
+
+  ## Docker
+  1. execute `docker-compose up -d`
+  2. verifique se a imagem foi construída com `docker images`
+  3. verifique o compartilhamento de rede com `docker ps`
