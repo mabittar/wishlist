@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy.sql import func
+from random import randrange
 import models
 import schemas
 
@@ -42,6 +42,6 @@ def update_wish(db: Session, wish_id: int, wish: schemas.WishUpdate):
 
 
 def randon_wishes_filter(db: Session, have=False):
-    wish_rand = db.query(models.Wish).filter(
-        models.Wish.have == have).all().func.random()
-    return wish_rand
+    wish_list = db.query(models.Wish).filter(models.Wish.have == have).count()
+    wish_selected = randrange(wish_list)
+    return db.query(models.Wish)[wish_selected]

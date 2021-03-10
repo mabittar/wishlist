@@ -1,5 +1,4 @@
-from pydantic import BaseModel
-from typing import Optional, List, Dict, Any
+from typing import Optional, List
 from fastapi import FastAPI, HTTPException, Depends
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
@@ -29,12 +28,6 @@ async def root():
 async def lista_desejos(have: Optional[bool] = None, db: Session = Depends(get_db)):
     '''Endpoint para a lista de Desejos '''
     return crud.list_wishes_filter(db, have)
-
-
-# @app.get("/wishlist", response_model=List[schemas.Wish])
-# async def lista_desejos_aleatorio(have=False, db: Session = Depends(get_db)):
-#     '''Endpoint para a lista de Desejos '''
-#     return crud.randon_wishes_filter(db, have)
 
 
 @app.get("/wishlist/{id}", response_model=schemas.Wish)
@@ -72,9 +65,18 @@ async def deletar_desejo(id: int, db: Session = Depends(get_db)):
 
 @app.patch("/wishlist/{id}", response_model=schemas.Wish)
 async def atualiza_desejo(id: int, desejo: schemas.WishUpdate, db: Session = Depends(get_db)):
-    '''Atualiza o campo have para indicar se o usuário já possui / comprou tal desejo '''
+    '''Atualiza os campos\n
+    have para indicar se o usuário já possui / comprou tal desejo\n
+    as demais informações também podem ser altaradas, com exceção do campo name'''
     wish_db = crud.get_wish(db, id)
     if wish_db:
         return crud.update_wish(db, id, desejo)
     raise HTTPException(
         status_code=404, detail="ID não encontrado / ID not found")
+
+
+@app.get("/wishlist/?have=false", response_model=List[schemas.Wish], tags=["Busca Randômica"])
+async def lista_desejos_aleatorio(have=False, db: Session = Depends(get_db)):
+    '''Endpoint para realizar uma busca na lista de desejos\n
+    returna um desejo aleatório. '''
+    return crud.randon_wishes_filter(db, have)
