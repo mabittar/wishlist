@@ -31,10 +31,10 @@ async def lista_desejos(have: Optional[bool] = None, db: Session = Depends(get_d
     return crud.list_wishes_filter(db, have)
 
 
-@app.get("/wishlist", response_model=List[schemas.Wish])
-async def lista_desejos_aleatorio(have=False, db: Session = Depends(get_db)):
-    '''Endpoint para a lista de Desejos '''
-    return crud.randon_wishes_filter(db, have)
+# @app.get("/wishlist", response_model=List[schemas.Wish])
+# async def lista_desejos_aleatorio(have=False, db: Session = Depends(get_db)):
+#     '''Endpoint para a lista de Desejos '''
+#     return crud.randon_wishes_filter(db, have)
 
 
 @app.get("/wishlist/{id}", response_model=schemas.Wish)
