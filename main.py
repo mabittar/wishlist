@@ -27,8 +27,14 @@ async def root():
 
 @app.get("/wishlist", response_model=List[schemas.Wish])
 async def lista_desejos(have: Optional[bool] = None, db: Session = Depends(get_db)):
-    '''Endlist para a lista de Desejos '''
+    '''Endpoint para a lista de Desejos '''
     return crud.list_wishes_filter(db, have)
+
+
+@app.get("/wishlist", response_model=List[schemas.Wish])
+async def lista_desejos_aleatorio(have=False, db: Session = Depends(get_db)):
+    '''Endpoint para a lista de Desejos '''
+    return crud.randon_wishes_filter(db, have)
 
 
 @app.get("/wishlist/{id}", response_model=schemas.Wish)
@@ -44,8 +50,8 @@ async def filtra_id(id: int, db: Session = Depends(get_db)):
 @app.post("/wishlist", response_model=schemas.Wish, status_code=201)
 async def criar_novo_desejo(desejo: schemas.WishCreate, db: Session = Depends(get_db)):
     '''Cria um novo desejo.\n
-    Os campos descrição, image_link e link são opcionais
-    No campo name deve ser informado o nome do desejo
+    Os campos descrição, image_link e link são opcionais\n
+    No campo name deve ser informado o nome do desejo\n
     No campo have deve ser informado se o usuário já possui (True or False)
      '''
     return crud.create_wish(db, desejo)

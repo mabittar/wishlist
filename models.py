@@ -9,10 +9,10 @@ class Wish(Base):
 
     name = Column(String(50))
 
-    description = Column(String(75))
+    description = Column(String(75), nullable=True)
 
     image_link = Column(String, nullable=True)
 
     link = Column(String, nullable=True)
 
-    have = Column(Boolean, default=False,)
+    have = Column(Boolean, default=False)

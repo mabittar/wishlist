@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import func
 import models
 import schemas
 
@@ -38,3 +39,9 @@ def update_wish(db: Session, wish_id: int, wish: schemas.WishUpdate):
     db.commit()
     db.refresh(wish_db)
     return wish_db
+
+
+def randon_wishes_filter(db: Session, have=False):
+    wish_rand = db.query(models.Wish).filter(
+        models.Wish.have == have).all().func.random()
+    return wish_rand
