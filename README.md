@@ -1,13 +1,7 @@
-# WishList using FastAPI e SQLAlchemy
+# WishList using FastAPI and SQLAlchemy
 
 ---
-<table>
-<tr>
-<td>
-  Using FastAPI to create a wishlist
-</td>
-</tr>
-</table>
+
 
 ## O desafio
 
