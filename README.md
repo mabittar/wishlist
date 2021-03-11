@@ -32,7 +32,7 @@
 
   [x] Ter uma base de dados que armazene as informações
 
-  [ ] Usar o docker-compose para subir um banco de dados junto com a aplicação
+  [x] Usar o docker-compose para subir um banco de dados junto com a aplicação
 
   Diferenciais:
 
