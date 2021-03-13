@@ -38,7 +38,7 @@
   1. clone o repositório com `git clone https://github.com/mabittar/wishlist.git`
   2. mova o caminho para o diretório do projeto `cd wishlist`
   3. crie o venv com Python 3.6 ou superior `python -m venv .`
-  4. ative o venv `.\Scritps\activate`
+  4. ative o venv `.\Scripts\activate`
   5. instale as dependências utilizando `pip install -r dev-requirements.txt`
   6. execute os testes com `pytest test/`
 
